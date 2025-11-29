@@ -8,7 +8,7 @@
 use std::collections::BTreeMap;
 use std::io::Write;
 
-use quick_xml::events::{BytesEnd, BytesStart, Event};
+use quick_xml::events::{BytesStart, Event};
 use quick_xml::Error as XmlError;
 use quick_xml::Writer;
 
@@ -558,8 +558,7 @@ impl ToXml for ITunesItemExtension {
             let name = "itunes:image";
             let mut element = BytesStart::new(name);
             element.push_attribute(("href", &**image));
-            writer.write_event(Event::Start(element))?;
-            writer.write_event(Event::End(BytesEnd::new(name)))?;
+            writer.write_event(Event::Empty(element))?;
         }
 
         if let Some(duration) = self.duration.as_ref() {
